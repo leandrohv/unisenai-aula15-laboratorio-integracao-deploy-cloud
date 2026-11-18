@@ -1,0 +1,29 @@
+# Perfil de limites e observabilidade para laboratório. Não é configuração de produção.
+# Utilizar: docker compose -f compose.yaml -f compose.lab.yaml up -d --build
+services:
+  frontend:
+    mem_limit: 128m
+    cpus: 0.35
+    pids_limit: 100
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options: { max-size: "5m", max-file: "2" }
+  backend:
+    mem_limit: 384m
+    cpus: 0.70
+    pids_limit: 120
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options: { max-size: "5m", max-file: "2" }
+  db:
+    mem_limit: 512m
+    cpus: 1.00
+    logging:
+      driver: json-file
+      options: { max-size: "5m", max-file: "2" }
